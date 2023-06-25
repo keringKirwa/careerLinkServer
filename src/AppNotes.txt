@@ -1,0 +1,71 @@
+implementation 'org.springframework.boot:spring-boot-starter-security'
+testImplementation 'org.springframework.security:spring-security-test'
+testImplementation 'org.springframework.security:spring-security-test'
+
+
+
+INSIDE://kafka:9092 is used for the containers that are in the same network .
+
+
+
+version: '2'
+services:
+  spark-master:
+    image: bitnami/spark:latest
+    ports:
+      - "7000:8080"  # Spark Master UI
+      - "7077:7077"  # Spark Master address
+    environment:
+      - SPARK_MODE=master
+    command: bin/spark-class org.apache.spark.deploy.master.Master
+    networks:
+      hustler_fund_network:
+
+  spark-worker-1:
+    image: bitnami/spark:latest
+    environment:
+      - SPARK_MODE=worker
+      - SPARK_MASTER_URL=spark://spark-master:7077
+    command: bin/spark-class org.apache.spark.deploy.worker.Worker spark://spark-master:7077
+    networks:
+      - hustler_fund_network
+
+  spark-worker-2:
+    image: bitnami/spark:latest
+    environment:
+      - SPARK_MODE=worker
+      - SPARK_MASTER_URL=spark://spark-master:7077
+    command: bin/spark-class org.apache.spark.deploy.worker.Worker spark://spark-master:7077
+    networks:
+      - hustler_fund_network
+  zookeeper:
+    container_name: zookeeper
+    image: wurstmeister/zookeeper
+    ports:
+      - "2181:2181"
+    networks:
+      - hustler_fund_network
+
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    container_name: kafka
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+
+    networks:
+      - hustler_fund_network
+
+networks:
+  hustler_fund_network:
+    external: true
+
+
+volumes:
+  mongo_data:
