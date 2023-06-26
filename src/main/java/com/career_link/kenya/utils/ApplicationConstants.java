@@ -1,5 +1,8 @@
 package com.career_link.kenya.utils;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 public class ApplicationConstants {
 
     /*KAFKA CONSTANTS */
@@ -12,6 +15,8 @@ public class ApplicationConstants {
     /*JWT AUTH CONSTANTS*/
     public static final String SECRET_KEY = "556B58703272357538782F413F4428472B4B6250655368566D59713374367639";
     public static final long JWT_EXPIRATION_TIME = 60 * 1000;
+
+    public static final PasswordEncoder passwordEncoder =   new BCryptPasswordEncoder();
 
 
 
