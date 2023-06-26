@@ -1,6 +1,7 @@
 package com.career_link.kenya.security;
 
 import com.career_link.kenya.services.UserDetailsServiceImpl;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,13 +19,17 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  */
 
 @Configuration
+@RequiredArgsConstructor
 public class JWTSecurityDependencies {
-    @Autowired
-    UserDetailsServiceImpl userDetailsService;
-    @Autowired PasswordEncoder passwordEncoder;
+
+    private final UserDetailsServiceImpl userDetailsService;
+    @Bean
+    public PasswordEncoder OnCreatePasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     @Bean
-    public AuthenticationProvider OnCreateAuthenticationProvider() {
+    public AuthenticationProvider OnCreateAuthenticationProvider(PasswordEncoder passwordEncoder) {
 
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(userDetailsService);
@@ -33,15 +38,12 @@ public class JWTSecurityDependencies {
     }
 
     @Bean
-    public AuthenticationManager OnCreateauthenticationManager(@Lazy AuthenticationConfiguration authenticationConfiguration) throws Exception {
+    public AuthenticationManager OnCreateauthenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
 
-    @Bean
-    public PasswordEncoder OnCreatePasswordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+
 
 
 }
