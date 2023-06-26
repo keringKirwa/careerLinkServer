@@ -2,7 +2,7 @@ package com.career_link.kenya.producers;
 
 
 import com.career_link.kenya.entities.Message;
-import com.career_link.kenya.lib.ApplicationConstants;
+import com.career_link.kenya.utils.ApplicationConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;

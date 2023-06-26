@@ -1,6 +1,6 @@
 package com.career_link.kenya.config.kafka_config;
 
-import com.career_link.kenya.lib.ApplicationConstants;
+import com.career_link.kenya.utils.ApplicationConstants;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.context.annotation.Bean;

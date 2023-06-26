@@ -7,8 +7,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
-import static com.career_link.kenya.lib.ApplicationConstants.TEXT_MESSAGES_GROUP_ID;
-import static com.career_link.kenya.lib.ApplicationConstants.TEXT_MESSAGES_TOPIC;
+import static com.career_link.kenya.utils.ApplicationConstants.TEXT_MESSAGES_GROUP_ID;
+import static com.career_link.kenya.utils.ApplicationConstants.TEXT_MESSAGES_TOPIC;
 
 @Service
 public class MessageConsumer {

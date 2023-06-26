@@ -1,7 +1,7 @@
 package com.career_link.kenya.config.kafka_config;
 
 import com.career_link.kenya.entities.Message;
-import com.career_link.kenya.lib.ApplicationConstants;
+import com.career_link.kenya.utils.ApplicationConstants;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.context.annotation.Bean;
@@ -30,11 +30,13 @@ public class MessagesProducerConfig {
 
     @Bean
     public ProducerFactory<String, Message> messageProducerFactory() {
+
         Map<String, Object> config = new HashMap<>();
         config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, ApplicationConstants.BOOTSTRAP_SERVERS);
         config.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         config.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
         return new DefaultKafkaProducerFactory<>(config);
+
     }
 
 
