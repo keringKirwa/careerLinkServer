@@ -69,3 +69,9 @@ networks:
 
 volumes:
   mongo_data:
+
+
+
+  /****** **** /
+
+
