@@ -22,6 +22,6 @@ public class MessageProducer  {
 
     public void publishTextMessage(Message message) {
 
-        messageKafkaTemplate.send(ApplicationConstants.TEXT_MESSAGES_TOPIC, message);
+        messageKafkaTemplate.send(ApplicationConstants.TEXT_MESSAGES_TOPIC,message.getUserId(), message);
     }
 }

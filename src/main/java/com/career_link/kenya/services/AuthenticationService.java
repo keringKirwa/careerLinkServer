@@ -4,6 +4,8 @@ import com.career_link.kenya.entities.ApplicationUser;
 import com.career_link.kenya.entities.SignInRequest;
 import com.career_link.kenya.entities.SignInResponse;
 import com.career_link.kenya.security.JwtTokenProvider;
+import com.career_link.kenya.utils.ApplicationConstants;
+import com.career_link.kenya.utils.LoggingTypes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,7 +22,6 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final UserDetailsServiceImpl userDetailsServiceImpl;
 
-
     public SignInResponse signIn(SignInRequest request) {
 
         try {
@@ -32,8 +33,7 @@ public class AuthenticationService {
             );
 
         } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println(e.getMessage()); //TODO: SAVE THE LOGS FROM HERE TO THE DATABASE .
+            ApplicationConstants.LOG(e.getMessage(), LoggingTypes.ERROR); //TODO: SAVE THE LOGS FROM HERE TO THE DATABASE .
 
         }
 

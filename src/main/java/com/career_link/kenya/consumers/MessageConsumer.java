@@ -12,7 +12,6 @@ import static com.career_link.kenya.utils.ApplicationConstants.TEXT_MESSAGES_TOP
 
 @Service
 public class MessageConsumer {
-
     private final ObjectMapper objectMapper = new ObjectMapper();
 
 

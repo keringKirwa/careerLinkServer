@@ -1,4 +1,3 @@
-// AuthFilter.java
 package com.career_link.kenya.security;
 
 import com.career_link.kenya.services.UserDetailsServiceImpl;
@@ -39,7 +38,6 @@ public class AuthFilter extends OncePerRequestFilter {
         final String userEmail;
 
         if (request.getServletPath().contains("/api/v1/auth") || request.getServletPath().contains("/test")) {
-            System.out.println("The filter path in AuthFilter is :: " + request.getServletPath());
             filterChain.doFilter(request, response);
             return; //TODO: user is assumed to be authenticated .
         }
