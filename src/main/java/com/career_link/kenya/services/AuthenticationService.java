@@ -10,6 +10,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Service
 public class AuthenticationService {
 
@@ -22,15 +25,21 @@ public class AuthenticationService {
 
     public SignInResponse signIn(SignInRequest request) {
 
-        authenticationManager.authenticate(
+      /*  authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmailAddress(),
                         request.getPassword()
                 )
-        );
+        );*/
         ApplicationUser applicationUser = userDetailsServiceImpl.getDummyAppUser(request.getEmailAddress());
+        System.out.println(applicationUser.toString());
 
-        var jwtToken = jwtTokenProvider.generateJwtToken(null, applicationUser);
+        Map<String , String> claims = new HashMap<>();
+        claims.put("userId", "123");
+        claims.put("role", "admin");
+
+        var jwtToken = jwtTokenProvider.generateJwtToken(claims, applicationUser);
+        System.out.println(jwtToken);
 
         return SignInResponse.builder()
                 .jwtToken(jwtToken)

@@ -17,7 +17,7 @@ import java.util.function.Function;
 @Service
 public class JwtTokenProvider {
 
-    public String generateJwtToken(Map<String, Object> extraClaims, UserDetails userDetails) {
+    public String generateJwtToken(Map<String, String> extraClaims, UserDetails userDetails) {
         return Jwts.builder()
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
