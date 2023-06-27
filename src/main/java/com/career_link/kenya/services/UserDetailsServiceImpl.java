@@ -22,17 +22,25 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 .emailAddress("admin@gmail.com")
                 .password(passwordEncoder.encode("Kemails@2020"))
                 .profileImageAddress("https://profile/image")
+                .isAccountNonExpired(true)
+                .isEnabled(true)
+                .isCredentialsNonExpired(true)
+                .isAccountNonLocked(true)
                 .role(Role.ADMIN)
                 .id(100)
                 .build();
     }
 
-    public ApplicationUser getDummyAppUser(String emailAddress) throws UsernameNotFoundException {
+    public ApplicationUser getDummyAppUser(String emailAddress) {
         return ApplicationUser.builder()
                 .username("admin@gmail.com")
                 .emailAddress("admin@gmail.com")
                 .password(passwordEncoder.encode("Kemails@2020"))
                 .profileImageAddress("https://profile/image")
+                .isAccountNonExpired(true)
+                .isEnabled(true)
+                .isCredentialsNonExpired(true)
+                .isAccountNonLocked(true)
                 .role(Role.ADMIN)
                 .id(100)
                 .build();

@@ -1,7 +1,7 @@
 package com.career_link.kenya.config;
 
 import com.career_link.kenya.security.AuthFilter;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -16,15 +16,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class WebSecurityConfig {
     private static final String[] WHITE_LIST_URLS = {"/api/v1/auth/sign-up", "/api/v1/auth/sign-in", "/test"};
-    @Autowired
-    private AuthFilter authFilter;
+    private final AuthFilter authFilter;
 
-    @Autowired
-    private AuthenticationProvider authenticationProvider;
-    @Autowired
-    private AuthFilter JWTAuthFilter;
+    private final AuthenticationProvider authenticationProvider;
+    private final AuthFilter JWTAuthFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
