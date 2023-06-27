@@ -22,8 +22,9 @@ public class ApplicationUser implements UserDetails {
     private Integer id;
 
     private String username;
-    private String profileImageAddress;
     private String password;
+
+    private String profileImageAddress;
     private String emailAddress;
 
     @Builder.Default

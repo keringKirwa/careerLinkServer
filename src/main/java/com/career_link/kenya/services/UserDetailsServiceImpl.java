@@ -15,10 +15,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String emailAddress) throws UsernameNotFoundException {
-        System.out.println("The login function was called ....");
+        System.out.println("The loadUserByUsername(userEmailAddress) function called....");
 
         return ApplicationUser.builder()
-                .username("kelvinkering")
+                .username("admin@gmail.com")
                 .emailAddress("admin@gmail.com")
                 .password(passwordEncoder.encode("Kemails@2020"))
                 .profileImageAddress("https://profile/image")
@@ -29,7 +29,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     public ApplicationUser getDummyAppUser(String emailAddress) throws UsernameNotFoundException {
         return ApplicationUser.builder()
-                .username("kelvinkering")
+                .username("admin@gmail.com")
                 .emailAddress("admin@gmail.com")
                 .password(passwordEncoder.encode("Kemails@2020"))
                 .profileImageAddress("https://profile/image")

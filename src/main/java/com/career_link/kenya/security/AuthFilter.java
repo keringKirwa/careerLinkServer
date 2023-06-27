@@ -38,11 +38,6 @@ public class AuthFilter extends OncePerRequestFilter {
         final String jwt;
         final String userEmail;
 
-        if (request.getServletPath().contains("/api/v1/auth")) {
-            filterChain.doFilter(request, response);
-            return;
-        }
-
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;

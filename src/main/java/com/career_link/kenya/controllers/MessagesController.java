@@ -3,14 +3,17 @@ package com.career_link.kenya.controllers;
 import com.career_link.kenya.entities.Message;
 import com.career_link.kenya.producers.MessageProducer;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@CrossOrigin("*")
-public class MainController {
+public class MessagesController {
+
+
     @Autowired
-    private  MessageProducer messageProducer;
+    private MessageProducer messageProducer;
 
     @GetMapping(value = "/test")
     public String testApp(@RequestBody Message message) {
@@ -19,7 +22,5 @@ public class MainController {
         return "success message";
 
     }
-
 }
-
 

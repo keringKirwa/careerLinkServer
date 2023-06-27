@@ -4,45 +4,47 @@ import com.career_link.kenya.entities.SignInRequest;
 import com.career_link.kenya.entities.SignInResponse;
 import com.career_link.kenya.entities.SignUpRequest;
 import com.career_link.kenya.services.AuthenticationService;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequiredArgsConstructor
+@RequestMapping("/api/v1/auth")
 public class  AuthController {
 
-    private final AuthenticationService authenticationService;
+    @Autowired
+    AuthenticationService authenticationService;
 
 
-    @PostMapping("/auth/login")
+    @PostMapping("/sign-in")
     public ResponseEntity<SignInResponse> signIn(@RequestBody SignInRequest signInRequest) {
        SignInResponse signInResponse= authenticationService.signIn(signInRequest);
         return ResponseEntity.ok(signInResponse);
 
     }
 
-    @PostMapping("/auth/register")
-    public ResponseEntity<Object> register(@RequestBody SignUpRequest signUpRequest) {
-        /*
-         * No JWT is generated in the signUp.
-         */
-
+    @PostMapping("/sign-up")
+    public ResponseEntity<Object> signUp(@RequestBody SignUpRequest signUpRequest) {
         try {
 
-            System.out.println("sign up Request :: " + signUpRequest.toString());
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body("hello login successful...");
+            // Process the sign-up request and save the user details
 
-        } catch (BadCredentialsException e) {
+            System.out.println("Sign-up Request: " + signUpRequest.toString());
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body("Registration successful!");
+
+        } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred during registration");
         }
-
     }
+
+
+
+
 
 }
