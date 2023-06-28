@@ -1,11 +1,11 @@
 package com.career_link.kenya.services;
 
-import com.career_link.kenya.entities.ApplicationUser;
-import com.career_link.kenya.entities.SignInRequest;
-import com.career_link.kenya.entities.SignInResponse;
+import com.career_link.kenya.entities.*;
+import com.career_link.kenya.repositories.AuthRepository;
 import com.career_link.kenya.security.JwtTokenProvider;
 import com.career_link.kenya.utils.ApplicationConstants;
 import com.career_link.kenya.utils.LoggingTypes;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -14,7 +14,10 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.career_link.kenya.utils.ApplicationConstants.passwordEncoder;
+
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class AuthenticationService {
 
@@ -22,37 +25,59 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final UserDetailsServiceImpl userDetailsServiceImpl;
 
-    public SignInResponse signIn(SignInRequest request) {
+    private final AuthRepository authRepository;
+
+
+    public String signUp(SignUpRequest signUpRequest) {
+        ApplicationUser applicationUser = ApplicationUser.builder()
+                .username(signUpRequest.getFirstName())
+                .emailAddress(signUpRequest.getEmailAddress())
+                .password(passwordEncoder.encode(signUpRequest.getPassword()))
+                .profileImageAddress("https://profile/image")
+                .isAccountNonExpired(true)
+                .isEnabled(true)
+                .isCredentialsNonExpired(true)
+                .isAccountNonLocked(true)
+                .role(Role.USER)
+                .build();
+        authRepository.save(applicationUser);
+        return "Registration Successful";
+
+
+    }
+
+
+    public SignInResponse signIn(SignInRequest signInRequest) {
 
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
-                            request.getEmailAddress(),
-                            request.getPassword()
+                            signInRequest.getEmailAddress(),
+                            signInRequest.getPassword()
                     )
             );
 
+            Map<String, String> dummyClaims = new HashMap<>();
+            dummyClaims.put("userId", "123");
+            dummyClaims.put("role", Role.USER.toString());
+
+            ApplicationUser applicationUser = authRepository.findByEmailAddress(signInRequest.getEmailAddress());
+            var jwtToken = jwtTokenProvider.generateJwtToken(dummyClaims, applicationUser);
+
+            return SignInResponse.builder()
+                    .username(applicationUser.getUsername())
+                    .profileImageAddress(applicationUser.getEmailAddress())
+                    .jwtToken(jwtToken)
+                    .message("Sign in successful")
+                    .profileImageAddress(applicationUser.getProfileImageAddress())
+                    .build();
+
+
         } catch (Exception e) {
             ApplicationConstants.LOG(e.getMessage(), LoggingTypes.ERROR); //TODO: SAVE THE LOGS FROM HERE TO THE DATABASE .
+            throw new IllegalStateException("something went missing");
 
         }
 
-
-        ApplicationUser applicationUser = userDetailsServiceImpl.getDummyAppUser(request.getEmailAddress());
-        System.out.println(applicationUser.toString());
-
-        Map<String, String> claims = new HashMap<>();
-        claims.put("userId", "123");
-        claims.put("role", "admin");
-
-        var jwtToken = jwtTokenProvider.generateJwtToken(claims, applicationUser);
-        System.out.println(jwtToken);
-
-        return SignInResponse.builder()
-                .jwtToken(jwtToken)
-                .username(applicationUser.getUsername())
-                .message("Sign In Successful")
-                .profileImageAddress(applicationUser.getProfileImageAddress())
-                .build();
     }
 }
