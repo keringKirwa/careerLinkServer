@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/career_link_db
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: kelvinkering
+  kafka:
+    consumer:
+      auto-offset-reset: earliest
+      bootstrap-servers: localhost:29092
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: 'true'
+    database: postgresql
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: 'true'
+
+
