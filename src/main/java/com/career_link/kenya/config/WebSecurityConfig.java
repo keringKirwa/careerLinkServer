@@ -18,7 +18,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class WebSecurityConfig {
-    private static final String[] WHITE_LIST_URLS = {"/api/v1/auth/sign-up", "/api/v1/auth/sign-in", "/test", "/api/v1/start-streamers"};
+    private static final String[] WHITE_LIST_URLS = {"/api/v1/auth/sign-up", "/api/v1/auth/sign-in"};
+    private static final String[] OTHER_URL = {"/api/v1/test"};
     private final AuthFilter authFilter;
 
     private final AuthenticationProvider authenticationProvider;
@@ -32,6 +33,7 @@ public class WebSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((auth) -> auth
                         .requestMatchers(HttpMethod.POST, WHITE_LIST_URLS).permitAll()
+                        .requestMatchers(HttpMethod.GET, OTHER_URL).permitAll()
                         .anyRequest().authenticated())
 
                 .authenticationProvider(authenticationProvider)

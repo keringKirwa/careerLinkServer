@@ -4,6 +4,7 @@ import com.career_link.kenya.entities.SignInRequest;
 import com.career_link.kenya.entities.SignInResponse;
 import com.career_link.kenya.entities.SignUpRequest;
 import com.career_link.kenya.services.AuthenticationService;
+import com.career_link.kenya.utils.ApplicationConstants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,20 +16,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/auth")
+@RequestMapping(ApplicationConstants.ROOT_PATH)
 public class AuthController {
 
     private final AuthenticationService authenticationService;
 
 
-    @PostMapping("/sign-in")
+    @PostMapping("/auth/sign-in")
     public ResponseEntity<SignInResponse> signIn(@RequestBody SignInRequest signInRequest) {
         SignInResponse signInResponse = authenticationService.signIn(signInRequest);
         return ResponseEntity.ok(signInResponse);
 
     }
 
-    @PostMapping("/sign-up")
+    @PostMapping("/auth/sign-up")
     public ResponseEntity<Object> signUp(@RequestBody SignUpRequest signUpRequest) {
         try {
             String regMessage = authenticationService.signUp(signUpRequest);

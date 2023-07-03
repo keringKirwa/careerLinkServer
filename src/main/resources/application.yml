@@ -18,14 +18,6 @@ spring:
       ddl-auto: create-drop
     show-sql: 'true'
 
-server:
-  port: 8080
-  ssl:
-    key-store: ./keystore.p12
-    key-store-password: Kemails@2020
-    key-store-type: PKCS12
-    key-alias: my_certificate
-
 
 
 

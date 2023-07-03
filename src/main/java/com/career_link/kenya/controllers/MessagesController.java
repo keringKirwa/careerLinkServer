@@ -1,25 +1,19 @@
 package com.career_link.kenya.controllers;
 
-import com.career_link.kenya.entities.Message;
-import com.career_link.kenya.producers.MessageProducer;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.career_link.kenya.utils.ApplicationConstants;
+import com.career_link.kenya.utils.LoggingTypes;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
+@RequestMapping(ApplicationConstants.ROOT_PATH)
 public class MessagesController {
 
-
-    @Autowired
-    private MessageProducer messageProducer;
-
-    @PostMapping(value = "/test")
-    public String testApp(@RequestBody Message message) {
-        System.out.println("data received is here :" );
-        messageProducer.publishTextMessage(message);
+    @GetMapping(value = "/test")
+    public String testApp() {
+        ApplicationConstants.LOG("APP TEST SUCCEEDED", LoggingTypes.INFO);
         return "success message";
 
     }

@@ -1,0 +1,54 @@
+implementation 'org.springframework.boot:spring-boot-starter-security'
+testImplementation 'org.springframework.security:spring-security-test'
+testImplementation 'org.springframework.security:spring-security-test'
+
+
+
+INSIDE://kafka:9092 is used for the containers that are in the same network .
+
+
+
+version: '2'
+services:
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    container_name: kafka
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+
+    networks:
+      - hustler_fund_network
+
+networks:
+  hustler_fund_network:
+    external: true
+
+
+volumes:
+  mongo_data:
+
+
+
+****** +++++ ****
+   Advertised listeners are the listeners that Kafka communicates to clients, informing them how they can connect to the broker
+
+   (1) PLAINTEXT://kafka:9092: This listener is configured to be accessible within the Docker network using the hostname kafka and port 9092. It is using the PLAINTEXT protocol, which means the communication is not encrypted.
+   (2) PLAINTEXT_HOST://localhost:29092: This listener is configured to be accessible from the host machine (outside the Docker network) using the hostname localhost and port 29092. It is also using the PLAINTEXT protocol.
+
+
+****** +++++ ****
+  jdbc:postgresql://host.docker.internal:5432/career_link_jdbc : this allows the doceker contaier  to access the local machines's network
+
+****** +++++ ****
+To enable HTTPS on your website or server, you need to get a certificate (a type of file) from a Certificate Authority (CA). Let’s Encrypt is a CA.
+****** +++++ ****
+
+
+

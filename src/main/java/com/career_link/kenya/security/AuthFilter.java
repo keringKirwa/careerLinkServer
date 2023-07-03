@@ -1,6 +1,8 @@
 package com.career_link.kenya.security;
 
 import com.career_link.kenya.services.UserDetailsServiceImpl;
+import com.career_link.kenya.utils.ApplicationConstants;
+import com.career_link.kenya.utils.LoggingTypes;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,6 +28,11 @@ public class AuthFilter extends OncePerRequestFilter {
         this.userDetailsServiceImpl = userDetailsServiceImpl;
     }
 
+    /**
+     *Note that a request that does not pass a filter cannot be processed . the @return statement after a filter is used
+     * to terminate the function ensuring that there us no further processing after the next filter is invoked.
+     */
+
     @Override
     protected void doFilterInternal(
             @NonNull HttpServletRequest request,
@@ -37,9 +44,11 @@ public class AuthFilter extends OncePerRequestFilter {
         final String jwt;
         final String userEmail;
 
-        if (request.getServletPath().contains("/api/v1/auth") || request.getServletPath().contains("/test")) {
+        ApplicationConstants.LOG(request.getServletPath(), LoggingTypes.INFO);
+
+        if (request.getServletPath().contains("/api/v1/auth") || request.getServletPath().contains("/api/v1/test")) {
             filterChain.doFilter(request, response);
-            return; //TODO: user is assumed to be authenticated .
+            return;
         }
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {

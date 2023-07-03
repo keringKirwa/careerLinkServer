@@ -75,7 +75,8 @@ public class AuthenticationService {
 
         } catch (Exception e) {
             ApplicationConstants.LOG(e.getMessage(), LoggingTypes.ERROR); //TODO: SAVE THE LOGS FROM HERE TO THE DATABASE .
-            throw new IllegalStateException("something went missing");
+            e.printStackTrace();
+            return null;
 
         }
 
