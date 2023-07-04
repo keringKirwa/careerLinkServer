@@ -30,7 +30,8 @@ public class AuthenticationService {
 
     public String signUp(SignUpRequest signUpRequest) {
         ApplicationUser applicationUser = ApplicationUser.builder()
-                .username(signUpRequest.getFirstName())
+                .username(signUpRequest.getEmailAddress())
+                .fullName(signUpRequest.getFirstName() + signUpRequest.getLastName())
                 .emailAddress(signUpRequest.getEmailAddress())
                 .password(passwordEncoder.encode(signUpRequest.getPassword()))
                 .profileImageAddress("https://profile/image")

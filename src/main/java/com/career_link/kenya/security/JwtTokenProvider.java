@@ -1,11 +1,13 @@
 package com.career_link.kenya.security;
 
 import com.career_link.kenya.utils.ApplicationConstants;
+import com.career_link.kenya.utils.LoggingTypes;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.boot.actuate.autoconfigure.wavefront.WavefrontProperties;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -29,12 +31,28 @@ public class JwtTokenProvider {
     }
 
     public boolean validateJwtToken(String token, UserDetails userDetails) {
-        final String userName = getUsernameFromToken(token);
-        return (userName.equals(userDetails.getUsername())) && !isTokenExpired(token);
-    }
-    public String getUsernameFromToken(String JwtToken) {
 
-        return extractClaim(JwtToken, Claims::getSubject);
+        try {
+            System.out.println(userDetails);
+            final String userName = getUsernameFromToken(token);
+            System.out.println(userName);
+            return (userName.equals(userDetails.getUsername())) && !isTokenExpired(token);
+
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+
+    }
+
+    public String getUsernameFromToken(String JwtToken) {
+        try {
+            return extractClaim(JwtToken, Claims::getSubject);
+
+        } catch (Exception e) {
+            ApplicationConstants.LOG(e.getMessage(), LoggingTypes.ERROR);
+            throw new RuntimeException(e.getMessage());
+        }
+
 
     }
 

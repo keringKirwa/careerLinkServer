@@ -17,5 +17,11 @@ public class MessagesController {
         return "success message";
 
     }
+    @GetMapping(value = "/my-test")
+    public String test() {
+        ApplicationConstants.LOG("APP TEST SUCCEEDED", LoggingTypes.INFO);
+        throw new RuntimeException("Exception handling test here !! ");
+
+    }
 }
 

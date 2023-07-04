@@ -29,7 +29,7 @@ public class AuthFilter extends OncePerRequestFilter {
     }
 
     /**
-     *Note that a request that does not pass a filter cannot be processed . the @return statement after a filter is used
+     * Note that a request that does not pass a filter cannot be processed . the @return statement after a filter is used
      * to terminate the function ensuring that there us no further processing after the next filter is invoked.
      */
 
@@ -46,7 +46,7 @@ public class AuthFilter extends OncePerRequestFilter {
 
         ApplicationConstants.LOG(request.getServletPath(), LoggingTypes.INFO);
 
-        if (request.getServletPath().contains("/api/v1/auth") || request.getServletPath().contains("/api/v1/test")) {
+        if (request.getServletPath().contains("/api/v1/auth") || request.getServletPath().contains("/api/v1/test") || request.getServletPath().contains("/get-students")) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -57,8 +57,8 @@ public class AuthFilter extends OncePerRequestFilter {
         }
 
 
-
         jwt = authHeader.substring(7);
+        ApplicationConstants.LOG(jwt, LoggingTypes.INFO);
         userEmail = jwtTokenProvider.getUsernameFromToken(jwt);
 
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {

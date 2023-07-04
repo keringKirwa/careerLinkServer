@@ -17,12 +17,19 @@ import java.util.List;
 @Table(name = "APPLICATION_USER")
 public class ApplicationUser implements UserDetails {
 
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(
+            name = "application_user_sequence_gen",
+            sequenceName = "application_user_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer id;
 
-    private String username;
+    private String username; //THIS IS THE USER EMAIL ADDRESS(UNIQUE ID)
     private String password;
+    private String fullName;
 
     private String profileImageAddress;
     private String emailAddress;
