@@ -1,6 +1,6 @@
 package com.career_link.kenya.config;
 
-import com.career_link.kenya.services.api_service.EmployeeApiService;
+import com.career_link.kenya.services.api_service.EmployeeClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -22,12 +22,12 @@ public class WebClientConfig {
      * saved in the IoC container.
      */
     @Bean
-    public EmployeeApiService getStudentApiService(){
+    public EmployeeClient getStudentApiService(){
         HttpServiceProxyFactory httpServiceProxyFactory =
                 HttpServiceProxyFactory
                         .builder(WebClientAdapter.forClient(OnCreateSafaricomWebClient()))
                         .build();
-        return httpServiceProxyFactory.createClient(EmployeeApiService.class);
+        return httpServiceProxyFactory.createClient(EmployeeClient.class);
     }
 
 

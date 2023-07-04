@@ -1,7 +1,7 @@
 package com.career_link.kenya.controllers;
 
 import com.career_link.kenya.entities.EmployeeResponse;
-import com.career_link.kenya.services.api_service.EmployeeApiService;
+import com.career_link.kenya.services.api_service.EmployeeClient;
 import com.career_link.kenya.utils.ApplicationConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(ApplicationConstants.ROOT_PATH)
 public class EmployeeController {
     @Autowired
-    private EmployeeApiService employeeApiService;
+    private EmployeeClient employeeClient;
 
     @GetMapping(value = "/get-one-employee")
     public EmployeeResponse getOneEmployee() {
@@ -24,7 +24,7 @@ public class EmployeeController {
          * interacts with the server.
          */
 
-        return employeeApiService.getOneEmployee();
+        return employeeClient.getOneEmployee();
 
     }
 
