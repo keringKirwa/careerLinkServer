@@ -1,6 +1,5 @@
 package com.career_link.kenya.apache_spark;
 
-import org.apache.spark.streaming.api.java.JavaStreamingContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
