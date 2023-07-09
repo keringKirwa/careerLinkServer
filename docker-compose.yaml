@@ -25,6 +25,31 @@ services:
 
     networks:
       - hustler_fund_network
+  spark-master:
+    image: bitnami/spark:3.4
+    container_name: spark-master
+    ports:
+      - '9090:8080'   # Spark Master UI
+      - '7070:7077'   # Spark Master port
+    environment:
+      - SPARK_LOCAL_IP=spark-master
+      - SPARK_WORKLOAD=master
+      - SPARK_MODE=master
+      - SPARK_MASTER_PORT=7077
+    networks:
+      - hustler_fund_network
+
+  spark-worker:
+    image: bitnami/spark:3.4
+    container_name: spark-worker
+    hostname: spark-worker
+    depends_on:
+      - spark-master
+    environment:
+      - SPARK_MODE=worker
+      - SPARK_MASTER=spark://spark-master:7077
+    networks:
+      - hustler_fund_network
 
 networks:
   hustler_fund_network:

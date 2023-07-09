@@ -42,7 +42,6 @@ public class ApplicationConstants {
 
 
 
-
     public static void LOG(String message, LoggingTypes loggingTypes ){
 
         if (loggingTypes == LoggingTypes.INFO){
