@@ -1,6 +1,5 @@
 package com.career_link.kenya.consumers;
 
-
 import com.career_link.kenya.entities.Message;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
